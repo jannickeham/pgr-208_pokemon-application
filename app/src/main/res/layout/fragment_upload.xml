@@ -9,10 +9,10 @@
   <!-- TODO: Update blank fragment layout -->
 
   <Button
-    android:id="@+id/button5"
+    android:id="@+id/selectImageBtn"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Button"
+    android:text="Select Image"
     app:layout_constraintEnd_toStartOf="@+id/button6"
     app:layout_constraintHorizontal_bias="0.5"
     app:layout_constraintStart_toStartOf="parent"
@@ -25,8 +25,13 @@
     android:text="Button"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.5"
-    app:layout_constraintStart_toEndOf="@+id/button5"
+    app:layout_constraintStart_toEndOf="@+id/selectImageBtn"
     app:layout_constraintTop_toTopOf="parent" />
+
+  <ImageView
+      android:id="@+id/image_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
