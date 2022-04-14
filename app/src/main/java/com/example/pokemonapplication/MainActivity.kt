@@ -2,6 +2,7 @@ package com.example.pokemonapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.pokemonapplication.databinding.ActivityMainBinding
@@ -26,38 +27,40 @@ class MainActivity : AppCompatActivity() {
       }
     )
 
-    binding.btnUpload.setOnClickListener {
-      getImage.launch("image/*")
-    }
 
-    //Set default fragment
-    val fragmentUpload = FragmentUpload()
-    val fragmentSearch = FragmentSearch()
-    val fragmentSaved = FragmentSaved()
+  }
 
+  fun switchFragment(v: View) {
 
-    /* btnUpload.setOnClickListener {
-       supportFragmentManager.beginTransaction().apply {
-         replace(R.id.flFragment, fragmentUpload)
-         addToBackStack(null)
-         commit()
-       }
-     }*/
+    fragmentManager = supportFragmentManager
 
-    btnSearch.setOnClickListener {
-      supportFragmentManager.beginTransaction().apply {
-        replace(R.id.flFragment, fragmentSearch)
-        addToBackStack(null)
-        commit()
-      }
-    }
-
-    btnSaved.setOnClickListener {
-      supportFragmentManager.beginTransaction().apply {
-        replace(R.id.flFragment, fragmentSaved)
-        addToBackStack(null)
-        commit()
-      }
+    if (Integer.parseInt(v.getTag().toString()) == 1) {
+      fragmentManager
+        .beginTransaction()
+        .replace(
+          R.id.flFragment,
+          FragmentUploadClass(),
+          "FragmentUpload"
+        )
+        .commit()
+    } else if(Integer.parseInt(v.getTag().toString()) == 2) {
+      fragmentManager
+        .beginTransaction()
+        .replace(
+          R.id.flFragment,
+          FragmentSearch(),
+          "FragmentSearch"
+        )
+        .commit()
+    } else{
+      fragmentManager
+        .beginTransaction()
+        .replace(
+          R.id.flFragment,
+          FragmentSaved(),
+          "FragmentSaved"
+        )
+        .commit()
     }
   }
 }

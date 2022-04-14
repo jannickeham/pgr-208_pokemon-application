@@ -19,6 +19,8 @@
 
   <Button
     android:id="@+id/btnUpload"
+    android:onClick="switchFragment"
+    android:tag="1"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="24dp"
@@ -29,6 +31,8 @@
 
   <Button
     android:id="@+id/btnSearch"
+    android:onClick="switchFragment"
+    android:tag="2"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="24dp"
@@ -39,6 +43,8 @@
 
   <Button
     android:id="@+id/btnSaved"
+    android:onClick="switchFragment"
+    android:tag="3"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="24dp"
