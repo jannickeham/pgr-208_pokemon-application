@@ -18,16 +18,6 @@ class MainActivity : AppCompatActivity() {
     setContentView(R.layout.fragment_upload)
     binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
-
-    val getImage = registerForActivityResult(
-      ActivityResultContracts.GetContent(),
-      //Fungerer ikke per nå
-      ActivityResultCallback {
-        binding.imageViewMainActivity.setImageURI(it)
-      }
-    )
-
-
   }
 
   fun switchFragment(v: View) {
