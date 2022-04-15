@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
   private lateinit var binding : ActivityMainBinding
   private var fragmentManager = supportFragmentManager
 
-  //Henter bilde fra gallei
+  //Henter bilde fra galleri
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.fragment_upload)
