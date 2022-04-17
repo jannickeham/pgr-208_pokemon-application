@@ -16,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.fragment.app.*
@@ -28,11 +29,8 @@ class FragmentUploadClass : Fragment() {
 
     private var _binding: FragmentUploadBinding? = null
     private val binding get() = _binding!!
-
     public lateinit var image: CropImageView
-
     public var imageUri: String? = null
-
     public var actualCropRect: Rect? = null
 
     override fun onCreateView(
@@ -56,7 +54,8 @@ class FragmentUploadClass : Fragment() {
     }
 
     var startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        if (it.resultCode == Activity.RESULT_OK){
+
+        /*if (it.resultCode == Activity.RESULT_OK){
             imageUri = it.data?.data.toString()
 
             val image: Bitmap = getBitmap(requireContext(), null, imageUri, ::UriToBitmap)
@@ -69,8 +68,22 @@ class FragmentUploadClass : Fragment() {
             //Front- and background is the same size
             image_view.setImageBitmap(image)
             image_view.background = BitmapDrawable(image)
+        }*/
+
+        imageUri = it.data?.data.toString()
+        var bitmap_image = getBitmap(requireContext(), null, imageUri, :: UriToBitmap)
+        image.layoutParams = image.layoutParams.apply {
+            width = bitmap_image.width
+            height = bitmap_image.height
         }
+
+        image.setImageBitmap(bitmap_image)
+        image.background = BitmapDrawable(resources, bitmap_image)
     }
+
+
+
+
 
     /*
     override fun onDestroyView(){

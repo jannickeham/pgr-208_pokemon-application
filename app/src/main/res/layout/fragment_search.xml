@@ -16,5 +16,10 @@
     tools:layout_editor_absoluteX="-77dp"
     tools:layout_editor_absoluteY="0dp" />
 
+  <ImageView
+      android:id="@+id/viewCroppedImage"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

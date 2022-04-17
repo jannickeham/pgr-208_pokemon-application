@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.fragment_upload.*
 class MainActivity : AppCompatActivity() {
   private lateinit var binding : ActivityMainBinding
   private var fragmentManager = supportFragmentManager
+  private var imageList = ArrayList<ImageSetting>()
 
   //Henter bilde fra galleri
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         .beginTransaction()
         .replace(
           R.id.flFragment,
-          FragmentSearch(),
+          FragmentSearchClass(),
           "FragmentSearch"
         )
         .commit()
@@ -56,20 +57,21 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-  fun submit(view: View){
+   fun submit(view: View){
     var imageUri = (fragmentManager.findFragmentByTag("FragmentUpload") as FragmentUploadClass).imageUri.toString()
 
     var rect = (fragmentManager.findFragmentByTag("FragmentUpload") as FragmentUploadClass).actualCropRect!!
-    var imgW = (fragmentManager.findFragmentByTag("FragmentUpload") as FragmentUploadClass).image.width
-    var imgH = (fragmentManager.findFragmentByTag("FragmentUpload") as FragmentUploadClass).image.height
+    //var imgW = (fragmentManager.findFragmentByTag("FragmentUpload") as FragmentUploadClass).image.width
+    //var imgH = (fragmentManager.findFragmentByTag("FragmentUpload") as FragmentUploadClass).image.height
 
-    var imageReact = (fragmentManager.findFragmentByTag("FragmentUpload") as FragmentUploadClass).image_view.actualCropRect
+    var imageRect = (fragmentManager.findFragmentByTag("FragmentUpload") as FragmentUploadClass).image_view.actualCropRect
 
+    val croppedImage: ImageSetting = ImageSetting(imageUri, rect.left, rect.top, rect.right, rect.bottom)
 
-    val croppedImage: ImageSetting = ImageSetting(imageUri, rect.left.toInt(), rect.top.toInt(), rect.right.toInt(), rect.bottom.toInt(), imgW.toInt())
-    return
+    imageList.add(croppedImage)
 
-
-    Toast.makeText(this, "Added New Student", Toast.LENGTH_SHORT).show()
+    Toast.makeText(this, "Submitted cropped image for search", Toast.LENGTH_LONG).show()
   }
+
+
 }
