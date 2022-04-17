@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.edmodo.cropper.CropImageView
 
-class FragmentSearchClass: Fragment() {
+//class FragmentSearchClass: Fragment() {
 
-    public lateinit var image:
+    //public lateinit var image:
 
+            /*
     override fun onCreate(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,8 +24,8 @@ class FragmentSearchClass: Fragment() {
 
         image = view.findViewById<CropImageView>(R.id.image_view)
 
-
-
         return view
     }
-}
+
+             */
+//}

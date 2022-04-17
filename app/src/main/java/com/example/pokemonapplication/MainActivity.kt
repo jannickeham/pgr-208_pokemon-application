@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         .beginTransaction()
         .replace(
           R.id.flFragment,
-          FragmentSearchClass(),
+          FragmentSearch(),
           "FragmentSearch"
         )
         .commit()
@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
 
     var imageRect = (fragmentManager.findFragmentByTag("FragmentUpload") as FragmentUploadClass).image_view.actualCropRect
 
+     //Hentet fra forelesning der man endrer og lagrer bildet ved editactivity
     val croppedImage: ImageSetting = ImageSetting(imageUri, rect.left, rect.top, rect.right, rect.bottom)
 
     imageList.add(croppedImage)

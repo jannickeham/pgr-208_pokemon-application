@@ -8,22 +8,18 @@
     tools:context=".MainActivity">
 
   <!-- TODO: Update blank fragment layout -->
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Click on android icon to upload image and crop"
+      android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
 
   <com.edmodo.cropper.CropImageView
       android:id="@+id/image_view"
       android:layout_width="200dp"
       android:layout_height="200dp"
-      android:background="@drawable/ic_launcher_foreground" />
-
-  <Button
-      android:id="@+id/selectImageBtn"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Select Image"
-      app:layout_constraintEnd_toStartOf="@+id/button6"
-      app:layout_constraintHorizontal_bias="0.5"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      android:background="@mipmap/ic_launcher_round" />
 
   <Button
       android:id="@+id/submitBtn"
