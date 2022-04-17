@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         .beginTransaction()
         .replace(
           R.id.flFragment,
-          FragmentSearch(),
+          FragmentSearchClass(),
           "FragmentSearch"
         )
         .commit()
