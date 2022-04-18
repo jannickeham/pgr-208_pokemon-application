@@ -14,14 +14,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.*
 import com.bumptech.glide.Glide
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import kotlinx.android.synthetic.main.fragment_upload.*
 
 
-class FragmentUploadClass : Fragment() {
+class FragmentUpload : Fragment() {
 
     //Sandras kode
     private val GALLERY_REQUEST_CODE = 1234
@@ -55,6 +57,11 @@ class FragmentUploadClass : Fragment() {
 
         updateTextView.setOnClickListener{
             getImageFromGallery()
+        }
+
+        btnSubmit.setOnClickListener{
+          submit(view)
+
         }
     }
 
@@ -108,5 +115,12 @@ class FragmentUploadClass : Fragment() {
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
         intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
         startActivityForResult(intent, GALLERY_REQUEST_CODE)
+    }
+
+    private fun submit(view: View){
+      var imageUri = imageUri.toString()
+
+      Log.i(Globals.TAG, "DETTE SKRIVES UT<3 $imageUri")
+      Toast.makeText(activity, "Fragment 1 onCreateView", Toast.LENGTH_SHORT).show()
     }
 }
