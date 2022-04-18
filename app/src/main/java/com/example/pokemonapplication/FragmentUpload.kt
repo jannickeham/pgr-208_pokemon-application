@@ -21,6 +21,14 @@ import com.bumptech.glide.Glide
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.fragment_upload.*
+import com.androidnetworking.error.ANError
+
+import org.json.JSONObject
+
+import com.androidnetworking.interfaces.JSONObjectRequestListener
+
+import com.androidnetworking.AndroidNetworking
+import com.androidnetworking.common.Priority
 
 
 class FragmentUpload : Fragment() {
@@ -101,6 +109,7 @@ class FragmentUpload : Fragment() {
             .into(image)
     }
 
+    //Launching cropper
     private fun launchImageCrop(uri: Uri) {
         CropImage.activity(uri)
             .setGuidelines(CropImageView.Guidelines.ON)
@@ -108,6 +117,7 @@ class FragmentUpload : Fragment() {
             .start(requireContext(),this)
     }
 
+    //Gets image from gallery
     private fun getImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
@@ -117,10 +127,38 @@ class FragmentUpload : Fragment() {
         startActivityForResult(intent, GALLERY_REQUEST_CODE)
     }
 
+    //Gets image uri and saves it in a var
     private fun submit(view: View){
+      //Get Uri-string
       var imageUri = imageUri.toString()
 
-      Log.i(Globals.TAG, "DETTE SKRIVES UT<3 $imageUri")
+      //From string to Bitmap
+      var imageBitMap = UriToBitmap(requireContext(), null, imageUri)
+
+      //Vet ikke?
+      image.setImageBitmap(imageBitMap)
+
+      //Lager en fil
+      val file = bitmapToFile(imageBitMap, "image.png", requireContext())
+      Log.i(Globals.TAG, "SE HER DUUUUUU " + file)
+
+      //POST-request to server
+//      AndroidNetworking.post("http://api-edu.gtl.ai/ api/v1/imagesearch/upload")
+//        .addFileBody(file) // posting any type of file
+//        .setTag("test")
+//        .setPriority(Priority.MEDIUM)
+//        .build()
+//        .getAsJSONObject(object : JSONObjectRequestListener {
+//          override fun onResponse(response: JSONObject) {
+//            // do anything with response
+//          }
+//
+//          override fun onError(error: ANError) {
+//            // handle error
+//          }
+//        })
+
+//      Log.i(Globals.TAG, "DETTE SKRIVES UT<3 $imageUri")
       Toast.makeText(activity, "Fragment 1 onCreateView", Toast.LENGTH_SHORT).show()
     }
 }

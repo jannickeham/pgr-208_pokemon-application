@@ -7,6 +7,9 @@ import android.graphics.drawable.VectorDrawable
 import android.net.Uri
 import android.provider.MediaStore
 import androidx.core.content.ContextCompat
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.io.Serializable
 
 object Globals {
@@ -36,6 +39,30 @@ fun UriToBitmap(context: Context, id: Int?, uri: String?): Bitmap {
     return image
 }
 
+//Kopiert av Marie
+fun bitmapToByteArray(bitmap : Bitmap) : ByteArray{
+  val outputStream = ByteArrayOutputStream()
+
+  bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream)
+  return outputStream.toByteArray()
+}
+
+
 fun getBitmap(context: Context, id: Int?, uri: String?, decoder: (Context, Int?, String?) -> Bitmap): Bitmap {
     return decoder(context, id, uri)
+}
+
+fun bitmapToFile(bitmap : Bitmap, filename : String, context: Context) : File{
+
+  val file = File(context.getCacheDir(), filename)
+  file.createNewFile()
+
+  val bitmapdata = bitmapToByteArray(bitmap)
+
+  val fileOutputStream = FileOutputStream(file)
+  fileOutputStream.write(bitmapdata)
+  fileOutputStream.flush()
+  fileOutputStream.close()
+
+  return file
 }
