@@ -11,6 +11,36 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_upload.*
 
 class MainActivity : AppCompatActivity() {
+
+  //Sandras kode
+  private var imageInfo = ArrayList<ImageInfo>()
+  private var fragmentManager = supportFragmentManager
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
+
+    val fragmentUpload = FragmentUploadClass()
+    val fragmentSearch = FragmentSearch()
+
+//    //Used to set initial fragment to our container
+//    supportFragmentManager.beginTransaction().apply{
+//    replace(R.id.MainFragment, fragmentUpload)
+//    commit()
+//  }
+
+    //Possibility to click on buttons and change fragment to corresponding fragment
+    btnUpload.setOnClickListener {
+      supportFragmentManager.beginTransaction().apply {
+        replace(R.id.MainFragment, fragmentUpload)
+        addToBackStack(null)
+        commit()
+      }
+    }
+  }
+
+  /*
+  //Original kode
   private lateinit var binding : ActivityMainBinding
   private var fragmentManager = supportFragmentManager
   private var imageList = ArrayList<ImageSetting>()
@@ -41,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         .beginTransaction()
         .replace(
           R.id.flFragment,
-          FragmentSearchClass(),
+          FragmentSearch(),
           "FragmentSearch"
         )
         .commit()
@@ -73,6 +103,8 @@ class MainActivity : AppCompatActivity() {
 
     Toast.makeText(this, "Submitted cropped image for search", Toast.LENGTH_LONG).show()
   }
+
+   */
 
 
 }

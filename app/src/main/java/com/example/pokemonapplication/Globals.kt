@@ -14,7 +14,7 @@ object Globals {
 }
 
 //Needed for setting the crop size
-data class ImageSetting(var url: String, var x: Int, var y: Int, var h: Int, var w: Int, var position: Int=-1): Serializable {
+data class ImageInfo(var imageUri: String, var x: Int, var y: Int, var h: Int, var w: Int, var position: Int=-1): Serializable {
 }
 
 fun VectorDrawableToBitmap(context: Context, id: Int?, uri: String?) : Bitmap {

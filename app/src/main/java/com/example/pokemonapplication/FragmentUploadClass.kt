@@ -4,92 +4,107 @@ package com.example.pokemonapplication
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Rect
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.Toast
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
-
 import androidx.fragment.app.*
-import com.edmodo.cropper.CropImageView
-import com.example.pokemonapplication.databinding.FragmentUploadBinding
-import kotlinx.android.synthetic.main.fragment_upload.*
+import com.bumptech.glide.Glide
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 
 
 class FragmentUploadClass : Fragment() {
 
-    private var _binding: FragmentUploadBinding? = null
-    private val binding get() = _binding!!
-    public lateinit var image: CropImageView
-    public var imageUri: String? = null
-    public var actualCropRect: Rect? = null
+    //Sandras kode
+    private val GALLERY_REQUEST_CODE = 1234
 
+    var imageUri: String? = null
+    var actualCropRect: Rect? = null
+
+    lateinit var image: ImageView
+    lateinit var updateTextView : TextView
+
+    //1.event
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    //2.event
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_upload, container, false)
-
-        image = view.findViewById<CropImageView>(R.id.image_view)
-        image.setOnClickListener(View.OnClickListener{
-            var i = Intent()
-            i.action = Intent.ACTION_GET_CONTENT
-            i.type = "*/*"
-
-            startForResult.launch(i)
-        })
-
-        return view
+        return inflater.inflate(R.layout.fragment_upload, container, false)
     }
 
-    var startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+    //3.event
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        /*if (it.resultCode == Activity.RESULT_OK){
-            imageUri = it.data?.data.toString()
+        image = view.findViewById<ImageView>(R.id.image)
+        updateTextView = view.findViewById<TextView>(R.id.update_textview)
 
-            val image: Bitmap = getBitmap(requireContext(), null, imageUri, ::UriToBitmap)
-            image_view.layoutParams = image_view.layoutParams.apply {
-                //Setting the right size for each image
-                width = image!!.width
-                height = image!!.height
-
-            }
-            //Front- and background is the same size
-            image_view.setImageBitmap(image)
-            image_view.background = BitmapDrawable(image)
-        }*/
-
-        imageUri = it.data?.data.toString()
-        var bitmap_image = getBitmap(requireContext(), null, imageUri, :: UriToBitmap)
-        image.layoutParams = image.layoutParams.apply {
-            width = bitmap_image.width
-            height = bitmap_image.height
+        updateTextView.setOnClickListener{
+            getImageFromGallery()
         }
-
-        image.setImageBitmap(bitmap_image)
-        image.background = BitmapDrawable(resources, bitmap_image)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
+        when (requestCode) {
 
+            GALLERY_REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    data?.data?.let { uri ->
+                        launchImageCrop(uri)
+                    }
+                }
+                else{
+                    Log.e(TAG, "Image selection error: Couldn't select that image from memory." )
+                }
+            }
 
-
-    /*
-    override fun onDestroyView(){
-        super.onDestroyView()
-        _binding = null
+            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                val result = CropImage.getActivityResult(data)
+                if (resultCode == Activity.RESULT_OK) {
+                    setImage(result.uri)
+                }
+                else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    Log.e(TAG, "Crop error: ${result.getError()}" )
+                }
+            }
+        }
     }
 
-     */
+    private fun setImage(uri: Uri?) {
+        Glide.with(this)
+            .load(uri)
+            .into(image)
+    }
+
+    private fun launchImageCrop(uri: Uri) {
+        CropImage.activity(uri)
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .setCropShape(CropImageView.CropShape.RECTANGLE) // default is rectangle
+            .start(requireContext(),this)
+    }
+
+    private fun getImageFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+        val mimeTypes = arrayOf("image/jpeg", "image/png", "image/jpg")
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+        startActivityForResult(intent, GALLERY_REQUEST_CODE)
+    }
 }
