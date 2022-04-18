@@ -78,6 +78,8 @@ class FragmentUploadClass : Fragment() {
                 val result = CropImage.getActivityResult(data)
                 if (resultCode == Activity.RESULT_OK) {
                     setImage(result.uri)
+                    imageUri = result.uri.toString()
+                    Log.i(TAG, "PRINTER DETTE " + result.uri)
                 }
                 else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     Log.e(TAG, "Crop error: ${result.getError()}" )
