@@ -29,6 +29,12 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener
 
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
+import com.androidnetworking.interfaces.StringRequestListener
+import java.io.File
+import com.androidnetworking.interfaces.UploadProgressListener
+
+
+
 
 
 class FragmentUpload : Fragment() {
@@ -94,7 +100,7 @@ class FragmentUpload : Fragment() {
                 if (resultCode == Activity.RESULT_OK) {
                     setImage(result.uri)
                     imageUri = result.uri.toString()
-                    Log.i(TAG, "PRINTER DETTE " + result.uri)
+                    Log.i(TAG, "image uri " + result.uri)
                 }
                 else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     Log.e(TAG, "Crop error: ${result.getError()}" )
@@ -140,25 +146,33 @@ class FragmentUpload : Fragment() {
 
       //Lager en fil
       val file = bitmapToFile(imageBitMap, "image.png", requireContext())
-      Log.i(Globals.TAG, "SE HER DUUUUUU " + file)
+      Log.i(Globals.TAG, "Dette sendes til server i file $file")
 
       //POST-request to server
-//      AndroidNetworking.post("http://api-edu.gtl.ai/ api/v1/imagesearch/upload")
-//        .addFileBody(file) // posting any type of file
-//        .setTag("test")
-//        .setPriority(Priority.MEDIUM)
-//        .build()
-//        .getAsJSONObject(object : JSONObjectRequestListener {
-//          override fun onResponse(response: JSONObject) {
-//            // do anything with response
-//          }
-//
-//          override fun onError(error: ANError) {
-//            // handle error
-//          }
-//        })
+        postImageToServer(file)
 
 //      Log.i(Globals.TAG, "DETTE SKRIVES UT<3 $imageUri")
       Toast.makeText(activity, "Fragment 1 onCreateView", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun postImageToServer(file: File) {
+        AndroidNetworking.upload("http://api-edu.gtl.ai/api/v1/imagesearch/upload")
+            .addMultipartFile("image", file)
+
+            .setTag("uploadTest")
+            .setPriority(Priority.HIGH)
+            .build()
+            .setUploadProgressListener { bytesUploaded, totalBytes ->
+                // do anything with progress
+            }
+            .getAsString(object : StringRequestListener {
+                override fun onResponse(response: String) {
+                    println("Upload was success: $response")
+                }
+
+                override fun onError(error: ANError) {
+                    println("an error occurred $error")
+                }
+            })
     }
 }
