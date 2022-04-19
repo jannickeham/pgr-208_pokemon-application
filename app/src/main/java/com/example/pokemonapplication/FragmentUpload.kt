@@ -69,13 +69,21 @@ class FragmentUpload : Fragment() {
         image = view.findViewById<ImageView>(R.id.image)
         updateTextView = view.findViewById<TextView>(R.id.update_textview)
 
-        updateTextView.setOnClickListener{
+//        updateTextView.setOnClickListener{
+//            getImageFromGallery()
+//        }
+//
+        updateTextView.setOnClickListener {
             getImageFromGallery()
-        }
+            //btnSubmit.setVisibility(View.VISIBLE);
+          }
 
         btnSubmit.setOnClickListener{
-          submit(view)
-
+          if(imageUri == null ){
+            Toast.makeText(activity, "Please upload an image", Toast.LENGTH_SHORT).show()
+          } else{
+            submit(view)
+          }
         }
     }
 
@@ -138,6 +146,9 @@ class FragmentUpload : Fragment() {
       //Get Uri-string
       var imageUri = imageUri.toString()
 
+      if(imageUri == null){
+        Toast.makeText(activity, "Please upload an image", Toast.LENGTH_SHORT).show()
+      }
       //From string to Bitmap
       var imageBitMap = UriToBitmap(requireContext(), null, imageUri)
 
