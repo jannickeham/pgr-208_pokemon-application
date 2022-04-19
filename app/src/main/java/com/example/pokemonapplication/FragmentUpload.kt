@@ -69,15 +69,11 @@ class FragmentUpload : Fragment() {
         image = view.findViewById<ImageView>(R.id.image)
         updateTextView = view.findViewById<TextView>(R.id.update_textview)
 
-//        updateTextView.setOnClickListener{
-//            getImageFromGallery()
-//        }
-//
         updateTextView.setOnClickListener {
             getImageFromGallery()
-            //btnSubmit.setVisibility(View.VISIBLE);
           }
 
+        //Handling user not choosing image before submit
         btnSubmit.setOnClickListener{
           if(imageUri == null ){
             Toast.makeText(activity, "Please upload an image", Toast.LENGTH_SHORT).show()
@@ -166,6 +162,7 @@ class FragmentUpload : Fragment() {
       Toast.makeText(activity, "Fragment 1 onCreateView", Toast.LENGTH_SHORT).show()
     }
 
+    //POST
     private fun postImageToServer(file: File) {
         AndroidNetworking.upload("http://api-edu.gtl.ai/api/v1/imagesearch/upload")
             .addMultipartFile("image", file)
@@ -186,4 +183,7 @@ class FragmentUpload : Fragment() {
                 }
             })
     }
+
+    //GET
+
 }

@@ -34,6 +34,13 @@ class MainActivity : AppCompatActivity() {
         commit()
       }
     }
+    btnSearch.setOnClickListener {
+      supportFragmentManager.beginTransaction().apply {
+        replace(R.id.MainFragment, fragmentSearch)
+        addToBackStack(null)
+        commit()
+      }
+    }
   }
 
   /*
