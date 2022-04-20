@@ -15,7 +15,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.*
 import com.bumptech.glide.Glide
 import com.theartofdev.edmodo.cropper.CropImage
@@ -23,18 +22,12 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.fragment_upload.*
 import com.androidnetworking.error.ANError
 
-import org.json.JSONObject
-
-import com.androidnetworking.interfaces.JSONObjectRequestListener
-
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
+import com.androidnetworking.interfaces.JSONArrayRequestListener
 import com.androidnetworking.interfaces.StringRequestListener
 import java.io.File
-import com.androidnetworking.interfaces.UploadProgressListener
-
-
-
+import org.json.JSONArray
 
 
 class FragmentUpload : Fragment() {
@@ -158,15 +151,12 @@ class FragmentUpload : Fragment() {
       //POST-request to server
         postImageToServer(file)
 
-//      Log.i(Globals.TAG, "DETTE SKRIVES UT<3 $imageUri")
-      Toast.makeText(activity, "Fragment 1 onCreateView", Toast.LENGTH_SHORT).show()
     }
 
     //POST
-    private fun postImageToServer(file: File) {
+     fun postImageToServer(file: File) {
         AndroidNetworking.upload("http://api-edu.gtl.ai/api/v1/imagesearch/upload")
             .addMultipartFile("image", file)
-
             .setTag("uploadTest")
             .setPriority(Priority.HIGH)
             .build()
@@ -176,14 +166,44 @@ class FragmentUpload : Fragment() {
             .getAsString(object : StringRequestListener {
                 override fun onResponse(response: String) {
                     println("Upload was success: $response")
+                    Toast.makeText(activity, "Upload to server success", Toast.LENGTH_SHORT).show()
+                    getImageFromServer(response)
                 }
 
                 override fun onError(error: ANError) {
                     println("an error occurred $error")
+                    Toast.makeText(activity, "An error occurred during upload to server", Toast.LENGTH_SHORT).show()
                 }
             })
     }
 
+
+
     //GET
+    fun getImageFromServer(responsePost: String) {
+        val urlEndpointBing = "http://api-edu.gtl.ai/api/v1/imagesearch/bing"
+        var imageUrl = responsePost
+        var url = "$urlEndpointBing?url=$imageUrl"
+        var responsArray = ArrayList<JSONArray>()
+        println("urlEndointBing + imageUrl $urlEndpointBing$imageUrl")
+
+            AndroidNetworking.get(url)
+                .addPathParameter("pageNumber", "0")
+                //.addQueryParameter("url", imageUrl)
+                .addHeaders("token", "1234")
+                .setTag("downloadtest")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONArray(object : JSONArrayRequestListener {
+                    override fun onResponse(response: JSONArray) {
+                        responsArray.add(response)
+                        println(responsArray)
+                    }
+
+                    override fun onError(error: ANError) {
+                        println("an error occurred $error")
+                    }
+                })
+    }
 
 }
