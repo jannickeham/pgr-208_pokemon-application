@@ -20,6 +20,10 @@ object Globals {
 data class ImageInfo(var imageUri: String, var x: Int, var y: Int, var h: Int, var w: Int, var position: Int=-1): Serializable {
 }
 
+//Dataclass for image gallery
+data class ImagePost(var image: String) {
+}
+
 fun VectorDrawableToBitmap(context: Context, id: Int?, uri: String?) : Bitmap {
     val drawable = (ContextCompat.getDrawable(context!!, id!!) as VectorDrawable)
     val image = Bitmap.createBitmap(
