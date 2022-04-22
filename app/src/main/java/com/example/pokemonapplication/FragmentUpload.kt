@@ -26,6 +26,7 @@ import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.interfaces.JSONArrayRequestListener
 import com.androidnetworking.interfaces.StringRequestListener
+import com.google.gson.JsonParser
 import java.io.File
 import org.json.JSONArray
 
@@ -53,11 +54,13 @@ class FragmentUpload : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_upload, container, false)
+
     }
 
     //3.event
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         image = view.findViewById<ImageView>(R.id.image)
         updateTextView = view.findViewById<TextView>(R.id.update_textview)
@@ -110,6 +113,7 @@ class FragmentUpload : Fragment() {
         Glide.with(this)
             .load(uri)
             .into(image)
+
     }
 
     //Launching cropper
@@ -128,6 +132,7 @@ class FragmentUpload : Fragment() {
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
         intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
         startActivityForResult(intent, GALLERY_REQUEST_CODE)
+
     }
 
     //Gets image uri and saves it in a var
@@ -147,6 +152,7 @@ class FragmentUpload : Fragment() {
       //Lager en fil
       val file = bitmapToFile(imageBitMap, "image.png", requireContext())
       Log.i(Globals.TAG, "Dette sendes til server i file $file")
+
 
       //POST-request to server
         postImageToServer(file)
@@ -182,28 +188,98 @@ class FragmentUpload : Fragment() {
     //GET
     fun getImageFromServer(responsePost: String) {
         val urlEndpointBing = "http://api-edu.gtl.ai/api/v1/imagesearch/bing"
+        val urlEndpointGoogle = "http://api-edu.gtl.ai/api/v1/imagesearch/google"
+        val urlEndpointTineye = "http://api-edu.gtl.ai/api/v1/imagesearch/tineye"
         var imageUrl = responsePost
-        var url = "$urlEndpointBing?url=$imageUrl"
-        var responsArray = ArrayList<JSONArray>()
+        var urlBing = "$urlEndpointBing?url=$imageUrl"
+        var urlGoogle = "$urlEndpointGoogle?url=$imageUrl"
+        var urlTineye = "$urlEndpointTineye?url=$imageUrl"
+
+        var responsArrayBing = ArrayList<JSONArray>()
+        var responsArrayGoogle = ArrayList<JSONArray>()
+        var responsArrayTineye = ArrayList<JSONArray>()
         println("urlEndointBing + imageUrl $urlEndpointBing$imageUrl")
 
-            AndroidNetworking.get(url)
-                .addPathParameter("pageNumber", "0")
-                //.addQueryParameter("url", imageUrl)
-                .addHeaders("token", "1234")
-                .setTag("downloadtest")
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONArray(object : JSONArrayRequestListener {
-                    override fun onResponse(response: JSONArray) {
-                        responsArray.add(response)
-                        println(responsArray)
-                    }
+        //Get from /bing
+        getImageFromBing(urlBing, responsArrayBing)
 
-                    override fun onError(error: ANError) {
-                        println("an error occurred $error")
-                    }
-                })
+        //Get from /tineye
+        getImageFromTineye(urlTineye, responsArrayTineye)
+
+        //Get from /google
+        getImageFromGoogle(urlGoogle, responsArrayGoogle)
+
+        /*var responsArray = ArrayList<JSONArray>()
+        println("Array med alle objekter funnet: $responsArray")*/
+
     }
+
+    private fun getImageFromTineye(
+        urlTineye: String,
+        responsArrayTineye: ArrayList<JSONArray>
+    ) {
+        AndroidNetworking.get(urlTineye)
+            .addPathParameter("pageNumber", "0")
+            //.addQueryParameter("url", imageUrl)
+            .addHeaders("token", "1234")
+            .setTag("downloadtest")
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONArray(object : JSONArrayRequestListener {
+                override fun onResponse(response: JSONArray) {
+                    responsArrayTineye.add(response)
+                    println("Response from Tineye: $responsArrayTineye")
+                }
+
+                override fun onError(error: ANError) {
+                    println("an error occurred $error")
+                }
+            })
+    }
+
+    private fun getImageFromGoogle(
+        urlGoogle: String,
+        responsArrayGoogle: ArrayList<JSONArray>
+    ) {
+        AndroidNetworking.get(urlGoogle)
+            .addPathParameter("pageNumber", "0")
+            .addHeaders("token", "1234")
+            .setTag("downloadtest")
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONArray(object : JSONArrayRequestListener {
+                override fun onResponse(response: JSONArray) {
+                    responsArrayGoogle.add(response)
+                    println("Response from Google: $responsArrayGoogle")
+                }
+
+                override fun onError(error: ANError) {
+                    println("an error occurred $error")
+                }
+            })
+    }
+
+    private fun getImageFromBing(
+        urlBing: String,
+        responseArrayBing: ArrayList<JSONArray>
+    ) {
+        AndroidNetworking.get(urlBing)
+            .addPathParameter("pageNumber", "0")
+            .addHeaders("token", "1234")
+            .setTag("downloadtest")
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONArray(object : JSONArrayRequestListener {
+                override fun onResponse(response: JSONArray) {
+                    responseArrayBing.add(response)
+                    println("respons fra bing: $responseArrayBing")
+                }
+
+                override fun onError(error: ANError) {
+                    println("an error occurred $error")
+                }
+            })
+    }
+
 
 }
