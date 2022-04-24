@@ -26,9 +26,11 @@ import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.interfaces.JSONArrayRequestListener
 import com.androidnetworking.interfaces.StringRequestListener
+import com.example.pokemonapplication.models.PokemonModel
 import com.google.gson.JsonParser
 import java.io.File
 import org.json.JSONArray
+import org.json.JSONObject
 
 
 class FragmentUpload : Fragment() {
@@ -38,8 +40,9 @@ class FragmentUpload : Fragment() {
 
     var imageUri: String? = null
     var actualCropRect: Rect? = null
+    var data: ArrayList<PokemonModel> = ArrayList()
 
-    lateinit var image: ImageView
+  lateinit var image: ImageView
     lateinit var updateTextView : TextView
 
     //1.event
@@ -195,13 +198,13 @@ class FragmentUpload : Fragment() {
         var urlGoogle = "$urlEndpointGoogle?url=$imageUrl"
         var urlTineye = "$urlEndpointTineye?url=$imageUrl"
 
-        var responsArrayBing = ArrayList<JSONArray>()
+        var responseArrayBing = ArrayList<JSONArray>()
         var responsArrayGoogle = ArrayList<JSONArray>()
         var responsArrayTineye = ArrayList<JSONArray>()
         println("urlEndointBing + imageUrl $urlEndpointBing$imageUrl")
 
         //Get from /bing
-        getImageFromBing(urlBing, responsArrayBing)
+        getImageFromBing(urlBing, responseArrayBing)
 
         //Get from /tineye
         getImageFromTineye(urlTineye, responsArrayTineye)
@@ -209,8 +212,8 @@ class FragmentUpload : Fragment() {
         //Get from /google
         getImageFromGoogle(urlGoogle, responsArrayGoogle)
 
-        /*var responsArray = ArrayList<JSONArray>()
-        println("Array med alle objekter funnet: $responsArray")*/
+        //val responseArray = ArrayList<JSONArray>()
+        //println("Array med alle objekter funnet: $responsArray")
 
     }
 
@@ -227,8 +230,20 @@ class FragmentUpload : Fragment() {
             .build()
             .getAsJSONArray(object : JSONArrayRequestListener {
                 override fun onResponse(response: JSONArray) {
-                    responsArrayTineye.add(response)
+                    //responsArrayTineye.add(response)
                     println("Response from Tineye: $responsArrayTineye")
+
+                  if(response.length() > 0){
+                    for(index in 0 until response.length()){
+
+                      val imageLink = (response.get(index) as JSONObject).getString("image_link")
+                      val thumbnailLink = (response.get(index) as JSONObject).getString("image_link")
+
+                      data.add(
+                        PokemonModel(imageLink, thumbnailLink))
+                    }
+                  }
+                  Log.i(TAG, "Data with response result: $data")
                 }
 
                 override fun onError(error: ANError) {
@@ -249,8 +264,20 @@ class FragmentUpload : Fragment() {
             .build()
             .getAsJSONArray(object : JSONArrayRequestListener {
                 override fun onResponse(response: JSONArray) {
-                    responsArrayGoogle.add(response)
-                    println("Response from Google: $responsArrayGoogle")
+                  //responsArrayGoogle.add(response)
+                  println("Response from Google: $responsArrayGoogle")
+
+                  if(response.length() > 0){
+                    for(index in 0 until response.length()){
+
+                      val imageLink = (response.get(index) as JSONObject).getString("image_link")
+                      val thumbnailLink = (response.get(index) as JSONObject).getString("image_link")
+
+                      data.add(
+                        PokemonModel(imageLink, thumbnailLink))
+                    }
+                  }
+                  Log.i(TAG, "Data with response result: $data")
                 }
 
                 override fun onError(error: ANError) {
@@ -271,8 +298,20 @@ class FragmentUpload : Fragment() {
             .build()
             .getAsJSONArray(object : JSONArrayRequestListener {
                 override fun onResponse(response: JSONArray) {
-                    responseArrayBing.add(response)
-                    println("respons fra bing: $responseArrayBing")
+                  //responseArrayBing.add(response)
+                  println("respons fra bing: $responseArrayBing")
+
+                  if(response.length() > 0){
+                    for(index in 0 until response.length()){
+
+                      val imageLink = (response.get(index) as JSONObject).getString("image_link")
+                      val thumbnailLink = (response.get(index) as JSONObject).getString("image_link")
+
+                      data.add(
+                       PokemonModel(imageLink, thumbnailLink))
+                    }
+                  }
+                  Log.i(TAG, "Data with response result: $data")
                 }
 
                 override fun onError(error: ANError) {

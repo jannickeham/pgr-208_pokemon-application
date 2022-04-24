@@ -3,13 +3,15 @@ package com.example.pokemonapplication
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.androidnetworking.AndroidNetworking
+import com.example.pokemonapplication.models.PokemonModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
   //Sandras kode
-  private var imageInfo = ArrayList<ImageInfo>()
+  //private var imageInfo = ArrayList<ImageInfo>()
   private var fragmentManager = supportFragmentManager
+  private var data = ArrayList<PokemonModel>()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -17,8 +19,9 @@ class MainActivity : AppCompatActivity() {
 
     AndroidNetworking.initialize(applicationContext);
 
+
     val fragmentUpload = FragmentUpload()
-    val fragmentSearch = FragmentSearch()
+    val fragmentSearch = FragmentSearch(data)
 
 //    //Used to set initial fragment to our container
 //    supportFragmentManager.beginTransaction().apply{
