@@ -5,14 +5,12 @@ import android.database.sqlite.SQLiteOpenHelper
 
 class FeedReaderDbHelper(context: MainActivity) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL("create table OriginalImg (id primary key autoincrement, thumbnail blob, image blob)")
-        db.execSQL("create table PokemonSaved (id primary key autoincrement, thumbnail blob, image blob, original_image int, constraint fk_original_img foreign key (original_img) references OriginalImg(id))")
+        db.execSQL("create table pokemon (id primary key autoincrement, image blob)")
     }
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
-        db.execSQL("drop table if exists PokemonSaved")
-        db.execSQL("drop table if exists OriginalImg")
+        db.execSQL("drop table if exists pokemon")
         onCreate(db)
     }
     override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
