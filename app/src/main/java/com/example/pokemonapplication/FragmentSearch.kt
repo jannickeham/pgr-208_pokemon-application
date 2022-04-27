@@ -74,8 +74,5 @@ class FragmentSearch(var data: ArrayList<PokemonModel>) : Fragment() {
       pokemonAdapter?.notifyDataSetChanged()
     }
   }
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-  }
 }
 

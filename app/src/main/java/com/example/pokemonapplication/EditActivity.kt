@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pokemonapplication.models.PokemonModel
 
+//Non-functionality, intended for implementation to database
 class EditActivity : AppCompatActivity() {
   var imageUri: String? = null
   private var dbHelper: FeedReaderDbHelper = FeedReaderDbHelper(context = MainActivity())
@@ -29,11 +30,6 @@ class EditActivity : AppCompatActivity() {
       imageView.post {
         imageView.setImageBitmap(image!!)
       }
-//      GlobalScope.launch(Dispatchers.Default) {
-//        image = downloadImageUsingCoroutines(oldSelectedImage)
-//
-//        imageView.post { imageView.setImageBitmap(image!!) }
-//      }
 
     } else if (oldSelectedImage.imageLink.toString().equals("db")) {
       val cursor = dbHelper?.writableDatabase?.query(
@@ -84,7 +80,6 @@ class EditActivity : AppCompatActivity() {
       imageView.setImageBitmap(image!!)
     }
 
-
     val submitButton: Button = findViewById<Button>(R.id.addImageToDB)
     submitButton.setOnClickListener(object : View.OnClickListener {
       override fun onClick(view: View?) {
@@ -92,9 +87,6 @@ class EditActivity : AppCompatActivity() {
         val updatedSelectedImage: PokemonModel = oldSelectedImage.copy()
         updatedSelectedImage.imageLink = imageUri.toString()
 
-//        val intent: Intent = Intent()
-//          intent.putExtra("selected_image",updatedSelectedImage)
-//          setResult(RESULT_OK, intent)
         finish()
       }
     })
