@@ -35,7 +35,7 @@
 
       <Button
         android:id="@+id/addImageToDB"
-        android:text="Save"
+        android:text="Catch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

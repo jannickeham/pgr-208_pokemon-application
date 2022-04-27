@@ -1,59 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentUpload"
-  android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".FragmentUpload">
 
   <ImageView
+      android:id="@+id/image"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintBottom_toTopOf="@+id/update_textview"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintLeft_toLeftOf="parent"
-      android:id="@+id/image"
-      android:scaleType="fitXY"
       android:adjustViewBounds="true"
-      />
+      android:scaleType="fitXY"
+      app:layout_constraintBottom_toTopOf="@+id/update_textview"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
 
   <TextView
+      android:id="@+id/update_textview"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      app:layout_constraintTop_toBottomOf="@+id/image"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintLeft_toLeftOf="parent"
+      android:layout_height="84dp"
+      android:background="#a5a5a5"
+      android:gravity="center"
       android:padding="5dp"
+      android:text="Click to choose Pokemon"
       android:textColor="#fff"
       android:textSize="25sp"
       android:textStyle="bold"
-      android:text="Touch to change image"
-      android:id="@+id/update_textview"
-      android:gravity="center"
-      android:background="#a5a5a5"
-      />
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/image" />
 
   <Button
       android:id="@+id/btnSubmit"
-      android:onClick="submit"
-      android:layout_width="match_parent"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Submit"
+      android:onClick="submit"
+      android:text="Get Encounters"
       app:layout_constraintTop_toBottomOf="@+id/update_textview"
       tools:layout_editor_absoluteX="220dp" />
 
- <!-- <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/recycler_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scrollbars="vertical"
-    app:layoutManager="LinearLayoutManager" />-->
+  <!-- <androidx.recyclerview.widget.RecyclerView
+     android:id="@+id/recycler_view"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:scrollbars="vertical"
+     app:layoutManager="LinearLayoutManager" />-->
 
-<!--  <LinearLayout
+  <!--  <LinearLayout
     android:layout_margin="3dp"
     android:elevation="1dp"
     android:layout_width="match_parent"
@@ -68,16 +65,16 @@
       android:layout_width="match_parent"
       android:layout_height="200dp"/>-->
 
-<!--        <TextView-->
-<!--          android:layout_marginTop="5dp"-->
-<!--          android:textColor="@color/black"-->
-<!--          android:textSize="15sp"-->
-<!--          android:layout_centerHorizontal="true"-->
-<!--          android:id="@+id/name"-->
-<!--          android:text="Pokemon Name"-->
-<!--          android:layout_below="@+id/image"-->
-<!--          android:layout_width="wrap_content"-->
-<!--          android:layout_height="wrap_content"/>-->
+  <!--        <TextView-->
+  <!--          android:layout_marginTop="5dp"-->
+  <!--          android:textColor="@color/black"-->
+  <!--          android:textSize="15sp"-->
+  <!--          android:layout_centerHorizontal="true"-->
+  <!--          android:id="@+id/name"-->
+  <!--          android:text="Pokemon Name"-->
+  <!--          android:layout_below="@+id/image"-->
+  <!--          android:layout_width="wrap_content"-->
+  <!--          android:layout_height="wrap_content"/>-->
 
 
   <!--</LinearLayout>-->

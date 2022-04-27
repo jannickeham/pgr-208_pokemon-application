@@ -35,6 +35,7 @@ import com.androidnetworking.interfaces.StringRequestListener
 import com.example.pokemonapplication.adapters.PokemonAdapter
 import com.example.pokemonapplication.models.PokemonModel
 import com.google.gson.JsonParser
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_search.*
 //import kotlinx.android.synthetic.main.image_layout_fragment.*
 import java.io.File

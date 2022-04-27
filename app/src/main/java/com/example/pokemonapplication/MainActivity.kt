@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         addToBackStack(null)
         commit()
       }
+      background_image.visibility = View.GONE
     }  //Mitch
     btnSearch.setOnClickListener {
       supportFragmentManager.beginTransaction().apply {
