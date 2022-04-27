@@ -92,8 +92,6 @@ class FragmentUpload : Fragment() {
           addDataset()
         }
 
-
-
         //Handling user not choosing image before submit
         btnSubmit.setOnClickListener{
           if(imageUri == null ){

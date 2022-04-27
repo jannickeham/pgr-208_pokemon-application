@@ -1,10 +1,12 @@
 package com.example.pokemonapplication.adapters
 
 import android.content.Context
+import android.graphics.Insets.add
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
 import android.provider.ContactsContract
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
 import com.bumptech.glide.request.RequestOptions
+import com.example.pokemonapplication.Globals.TAG
 import com.example.pokemonapplication.R
 import com.example.pokemonapplication.models.PokemonModel
 //import com.squareup.picasso.Picasso
@@ -27,10 +30,19 @@ import kotlinx.android.synthetic.main.fragment_search.view.*
 import kotlinx.android.synthetic.main.fragment_upload.*
 //import kotlinx.android.synthetic.main.image_layout_fragment.view.*
 import org.json.JSONArray
+import android.widget.CompoundButton
+import android.widget.CheckBox
+
+
+
+
+
+
 
 class PokemonAdapter(
   val context: Context,
   var data: List<PokemonModel>,
+
   //val responseArray: ArrayList<JSONArray>,
   //val onImageClickListener: View.OnClickListener
 ) : RecyclerView.Adapter<PokemonAdapter.ViewHolder>() {
@@ -87,7 +99,9 @@ class PokemonAdapter(
     itemView: View
   ): RecyclerView.ViewHolder(itemView){
 
+    val linearLayout = itemView.linear
     val image = itemView.image
+    val saveButton = itemView.addImageToDB
     //val imageResult = itemView.image_result
 
     fun bind(pokemonModel: PokemonModel){
@@ -100,6 +114,26 @@ class PokemonAdapter(
         .applyDefaultRequestOptions(requestOptions)
         .load(pokemonModel.thumbnail)
         .into(image)
+
+      saveButton.setOnClickListener{
+        Log.i(TAG, "I AM THE BUTTTON to push for DB ")
+      }
+/*
+      itemView.setOnClickListener{
+        Log.i(TAG, "I was clicked ${pokemonModel.thumbnail}")
+
+      }*/
+
+  /*    checkBox.setOnClickListener{
+        for (i in 0 until linearLayout.getChildCount()) {
+          val itemView: View = linearLayout.getChildAt(i)
+          if (itemView is CheckBox && checkBox.isChecked) {
+
+
+            Log.i(TAG, "I was checked $checkBox")
+          }
+        }
+      }*/
 
       // blog_title.setText(blogPost.title)
       //blog_author.setText(blogPost.username)
