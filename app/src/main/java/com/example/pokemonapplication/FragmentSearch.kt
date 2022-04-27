@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemonapplication.adapters.PokemonAdapter
 import com.example.pokemonapplication.models.PokemonModel
@@ -19,7 +20,6 @@ class FragmentSearch(var data: ArrayList<PokemonModel>) : Fragment() {
   var pokemonAdapter: PokemonAdapter? = null
   //private lateinit var imageAdapter : ImageAdapter
 
-
   //1.event
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -27,6 +27,10 @@ class FragmentSearch(var data: ArrayList<PokemonModel>) : Fragment() {
     Log.i(Globals.TAG, "FragmentSearch onCreate")
     Toast.makeText(activity, "FragmentSearch onCreate", Toast.LENGTH_SHORT).show()
 
+//    (activity as MainActivity).initRecyclerView()
+//    (activity as MainActivity).addDataset()
+    /*initRecyclerView()
+    addDataset()*/
   }
 
   //2.event
@@ -38,7 +42,8 @@ class FragmentSearch(var data: ArrayList<PokemonModel>) : Fragment() {
     // Inflate the layout for this fragment
     //return inflater.inflate(R.layout.fragment_search, container, false)
     // Inflate the layout for this fragment
-    val view = inflater.inflate(R.layout.fragment_search, container, false)
+    //val view = inflater.inflate(R.layout.fragment_search, container, false)
+    val view = LayoutInflater.from(context).inflate(R.layout.fragment_search, null)
     val recyclerView: RecyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
 
     pokemonAdapter = PokemonAdapter(requireContext(), data)
@@ -52,9 +57,23 @@ class FragmentSearch(var data: ArrayList<PokemonModel>) : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-//    initRecyclerView()
-//    addDataset()
+
   }
+
+  /*private fun addDataset(){
+    val data = PokemonAdapter.createDataSet()
+    pokemonAdapter?.submitList(data)
+  }
+
+  private fun initRecyclerView(){
+    recycler_view.apply{
+      layoutManager = LinearLayoutManager(context)
+      val topSpacingDecoration = TopSpacingItemDecoration(30)
+      addItemDecoration(topSpacingDecoration)
+      pokemonAdapter = PokemonAdapter(context, data)
+      recycler_view.adapter = pokemonAdapter
+    }
+  }*/
 
 //  private fun addDataset(){
 //    val data = DataSource.createDataSet()
@@ -71,3 +90,4 @@ class FragmentSearch(var data: ArrayList<PokemonModel>) : Fragment() {
 //    }
 //  }
 }
+

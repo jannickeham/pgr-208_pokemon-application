@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Rect
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -13,9 +14,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.*
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -26,8 +32,11 @@ import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.interfaces.JSONArrayRequestListener
 import com.androidnetworking.interfaces.StringRequestListener
+import com.example.pokemonapplication.adapters.PokemonAdapter
 import com.example.pokemonapplication.models.PokemonModel
 import com.google.gson.JsonParser
+import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.image_layout_fragment.*
 import java.io.File
 import org.json.JSONArray
 import org.json.JSONObject
@@ -42,12 +51,17 @@ class FragmentUpload : Fragment() {
     var actualCropRect: Rect? = null
     var data: ArrayList<PokemonModel> = ArrayList()
 
-  lateinit var image: ImageView
+    lateinit var pokemonAdapter : PokemonAdapter
+    lateinit var image: ImageView
+    //lateinit var imageResult: ImageView
     lateinit var updateTextView : TextView
+    lateinit var recyclerView: RecyclerView
 
     //1.event
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+      pokemonAdapter = PokemonAdapter(requireContext(), data)
     }
 
     //2.event
@@ -64,23 +78,45 @@ class FragmentUpload : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        //recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         image = view.findViewById<ImageView>(R.id.image)
+        //imageResult = view.findViewById<ImageView>(R.id.image_result)
         updateTextView = view.findViewById<TextView>(R.id.update_textview)
 
         updateTextView.setOnClickListener {
             getImageFromGallery()
           }
 
+        image.setOnClickListener{
+          initRecyclerView()
+          addDataset()
+        }
+
+
+
         //Handling user not choosing image before submit
         btnSubmit.setOnClickListener{
           if(imageUri == null ){
             Toast.makeText(activity, "Please upload an image", Toast.LENGTH_SHORT).show()
           } else{
+            //startForResult.launch(i)
             submit(view)
+
           }
         }
     }
+
+  var startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+    imageUri = it.data?.data.toString()
+
+    val bitmap_image = getBitmap(requireContext(), null, imageUri, ::UriToBitmap)
+    image.apply {
+
+    }
+    image.setImageBitmap(bitmap_image)
+    image.background = BitmapDrawable(resources, bitmap_image)
+  }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -91,6 +127,7 @@ class FragmentUpload : Fragment() {
                 if (resultCode == Activity.RESULT_OK) {
                     data?.data?.let { uri ->
                         launchImageCrop(uri)
+                        //initRecyclerView()
                     }
                 }
                 else{
@@ -116,8 +153,8 @@ class FragmentUpload : Fragment() {
         Glide.with(this)
             .load(uri)
             .into(image)
-
     }
+
 
     //Launching cropper
     private fun launchImageCrop(uri: Uri) {
@@ -137,6 +174,22 @@ class FragmentUpload : Fragment() {
         startActivityForResult(intent, GALLERY_REQUEST_CODE)
 
     }
+
+    private fun addDataset(){
+    val data = PokemonAdapter.createDataSet()
+    pokemonAdapter.submitList(data)
+  }
+
+  private fun initRecyclerView(){
+    recycler_view.apply{
+
+      layoutManager = LinearLayoutManager(context)
+      val topSpacingDecoration = TopSpacingItemDecoration(30)
+      addItemDecoration(topSpacingDecoration)
+      pokemonAdapter = PokemonAdapter(context, data)
+      recycler_view.adapter = pokemonAdapter
+    }
+  }
 
     //Gets image uri and saves it in a var
     private fun submit(view: View){
@@ -158,11 +211,20 @@ class FragmentUpload : Fragment() {
 
 
       //POST-request to server
-        postImageToServer(file)
+      (activity as MainActivity).postImageToServer(file)
+      //MainActivity.postImageToServer(file)
+
+
+      //(activity as MainActivity).initRecyclerView()
+      //(activity as MainActivity).addDataset()
+      //initRecyclerView()
+      //addDataset()
 
     }
 
-    //POST
+
+
+    /*//POST
      fun postImageToServer(file: File) {
         AndroidNetworking.upload("http://api-edu.gtl.ai/api/v1/imagesearch/upload")
             .addMultipartFile("image", file)
@@ -320,5 +382,5 @@ class FragmentUpload : Fragment() {
             })
     }
 
-
+*/
 }

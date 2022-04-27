@@ -7,8 +7,13 @@
         <entry key="..\:/Users/idaa5/AndroidStudioProjects/pgr-208_pokemon-application/app/src/main/res/layout/fragment_saved.xml" value="0.36770833333333336" />
         <entry key="..\:/Users/idaa5/AndroidStudioProjects/pgr-208_pokemon-application/app/src/main/res/layout/fragment_search.xml" value="0.36770833333333336" />
         <entry key="..\:/Users/idaa5/AndroidStudioProjects/pgr-208_pokemon-application/app/src/main/res/layout/fragment_upload.xml" value="0.21041666666666667" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_upload.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.205761316872428" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/adapter_pokemon.xml" value="0.1046875" />
+        <entry key="app/src/main/res/layout/fragment_saved.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_upload.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/image_layout_fragment.xml" value="0.1" />
       </map>
     </option>
   </component>

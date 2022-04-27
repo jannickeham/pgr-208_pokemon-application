@@ -20,7 +20,7 @@ class SplashScreenActivity : AppCompatActivity() {
             val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
             startActivity(intent)
             finish()
-        }, 5000)
+        }, 1000)
 
         progressBar.max = 10
 
