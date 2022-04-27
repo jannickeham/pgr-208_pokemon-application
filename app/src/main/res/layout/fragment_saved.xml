@@ -8,13 +8,12 @@
 
   <!-- TODO: Update blank fragment layout -->
 
-  <TextView
-    android:id="@+id/textfragment2"
+<ImageView
+    android:id="@+id/savedBackgroundImage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:text="Halla saved"
-    tools:layout_editor_absoluteX="-77dp"
-    tools:layout_editor_absoluteY="0dp" />
-
+    android:visibility="visible"
+    android:background="@drawable/party"
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

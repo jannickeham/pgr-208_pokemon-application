@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     val fragmentUpload = FragmentUpload()
     val fragmentSearch = FragmentSearch(data)
-    //val fragmentSaved = FragmentSaved()
+    val fragmentSaved = FragmentSaved()
 
     //Possibility to click on buttons and change fragment to corresponding fragment
     btnUpload.setOnClickListener {
@@ -57,13 +57,13 @@ class MainActivity : AppCompatActivity() {
         commit()
       }
     }
-  /*  btnSearch.setOnClickListener {
+    btnSaved.setOnClickListener {
       supportFragmentManager.beginTransaction().apply {
         replace(R.id.MainFragment, fragmentSaved)
         addToBackStack(null)
         commit()
       }
-    }*/
+    }
 
     thread {
       val results = ArrayList<PokemonModel>()
