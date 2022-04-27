@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
+    //Tredjeparts bibliotek: Android Fast Networking
     AndroidNetworking.initialize(applicationContext);
 
     val fragmentUpload = FragmentUpload()
@@ -91,6 +92,7 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
+  //Tredjeparts bibliotek: Android Fast Networking
   //POST request to server
   fun postImageToServer(file: File) {
     progressBar2.visibility = View.VISIBLE
@@ -112,6 +114,7 @@ class MainActivity : AppCompatActivity() {
       })
   }
 
+  //Tredjeparts bibliotek: Android Fast Networking
   //GET request from
   fun getImageFromServer(responsePost: String) {
     val urlEndpointBing = "http://api-edu.gtl.ai/api/v1/imagesearch/bing"
@@ -132,6 +135,7 @@ class MainActivity : AppCompatActivity() {
     getImageFromGoogle(urlGoogle)
   }
 
+  //Tredjeparts bibliotek: Android Fast Networking
   private fun getImageFromTineye(
     urlTineye: String
   ) {
@@ -162,6 +166,7 @@ class MainActivity : AppCompatActivity() {
       })
   }
 
+  //Tredjeparts bibliotek: Android Fast Networking
   private fun getImageFromGoogle(
     urlGoogle: String
   ) {
@@ -192,6 +197,7 @@ class MainActivity : AppCompatActivity() {
       })
   }
 
+  //Tredjeparts bibliotek: Android Fast Networking
   private fun getImageFromBing(
     urlBing: String
   ) {
