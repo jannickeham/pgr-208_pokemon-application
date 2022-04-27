@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil.setContentView
 import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -20,7 +19,7 @@ class SplashScreenActivity : AppCompatActivity() {
             val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
             startActivity(intent)
             finish()
-        }, 1000)
+        }, 5000)
 
         progressBar.max = 10
 
@@ -29,6 +28,5 @@ class SplashScreenActivity : AppCompatActivity() {
         ObjectAnimator.ofInt(progressBar, "progress", currentProgress)
             .setDuration(5000)
             .start()
-
     }
 }

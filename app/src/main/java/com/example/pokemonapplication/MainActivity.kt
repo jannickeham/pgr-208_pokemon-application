@@ -239,30 +239,25 @@ class MainActivity : AppCompatActivity() {
   override fun onStart() {
     super.onStart()
     Log.i(Globals.TAG, "Activity 1 onStart")
-    Toast.makeText(this, "Activity onStart", Toast.LENGTH_SHORT).show()
   }
 
   override fun onResume() {
     super.onResume()
     Log.i(Globals.TAG, "Activity 1 onResume")
-    Toast.makeText(this, "Activity onResume", Toast.LENGTH_SHORT).show()
   }
 
   override fun onPause() {
     super.onPause()
     Log.i(Globals.TAG, "Activity 1 onPause")
-    Toast.makeText(this, "Activity onPause", Toast.LENGTH_SHORT).show()
   }
 
   override fun onStop() {
     super.onStop()
     Log.i(Globals.TAG, "Activity 1 onStop")
-    Toast.makeText(this, "Activity onStop", Toast.LENGTH_SHORT).show()
   }
 
   override fun onRestart() {
     super.onRestart()
     Log.i(Globals.TAG, "Activity 1 onRestart")
-    Toast.makeText(this, "Activity onRestart", Toast.LENGTH_SHORT).show()
   }
 }

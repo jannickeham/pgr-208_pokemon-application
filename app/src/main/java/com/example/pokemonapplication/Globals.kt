@@ -10,18 +10,9 @@ import androidx.core.content.ContextCompat
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.io.Serializable
 
 object Globals {
     val TAG = "PokemonApplication"
-}
-
-//Needed for setting the crop size
-data class ImageInfo(var imageUri: String, var x: Int, var y: Int, var h: Int, var w: Int, var position: Int=-1): Serializable {
-}
-
-//Dataclass for image gallery
-data class ImagePost(var image: String) {
 }
 
 fun VectorDrawableToBitmap(context: Context, id: Int?, uri: String?) : Bitmap {
@@ -43,14 +34,12 @@ fun UriToBitmap(context: Context, id: Int?, uri: String?): Bitmap {
     return image
 }
 
-//Kopiert av Marie
 fun bitmapToByteArray(bitmap : Bitmap) : ByteArray{
   val outputStream = ByteArrayOutputStream()
 
   bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream)
   return outputStream.toByteArray()
 }
-
 
 fun getBitmap(context: Context, id: Int?, uri: String?, decoder: (Context, Int?, String?) -> Bitmap): Bitmap {
     return decoder(context, id, uri)
