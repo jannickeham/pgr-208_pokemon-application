@@ -9,8 +9,8 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pokemonapplication.models.PokemonModel
 
-//Non-functionality, intended for implementation to database
-class EditActivity : AppCompatActivity() {
+//Non-functionality, intended for implementation to database. Commented out so app will compile
+/*class EditActivity : AppCompatActivity() {
   var imageUri: String? = null
   private var dbHelper: FeedReaderDbHelper = FeedReaderDbHelper(context = MainActivity())
 
@@ -91,4 +91,4 @@ class EditActivity : AppCompatActivity() {
       }
     })
   }
-}
+}*/

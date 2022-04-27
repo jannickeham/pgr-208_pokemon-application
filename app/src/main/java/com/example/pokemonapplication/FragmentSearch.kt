@@ -18,7 +18,7 @@ import com.example.pokemonapplication.models.PokemonModel
 
 class FragmentSearch(var data: ArrayList<PokemonModel>) : Fragment() {
 
-  private lateinit var dbHelper: FeedReaderDbHelper
+  //private lateinit var dbHelper: FeedReaderDbHelper
 
   var pokemonAdapter: PokemonAdapter? = null
   lateinit var saveButton: Button
@@ -36,7 +36,7 @@ class FragmentSearch(var data: ArrayList<PokemonModel>) : Fragment() {
     val view = LayoutInflater.from(context).inflate(R.layout.fragment_search, null)
     val recyclerView: RecyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
 
-      var onSaveImageListener = (object : View.OnClickListener {
+      /*var onSaveImageListener = (object : View.OnClickListener {
         override fun onClick(view: View?) {
 
 
@@ -58,7 +58,7 @@ class FragmentSearch(var data: ArrayList<PokemonModel>) : Fragment() {
           startForResult.launch(intent)
 
         }
-      })
+      })*/
 
     pokemonAdapter = PokemonAdapter(requireContext(), data)
     recyclerView.setAdapter(pokemonAdapter)

@@ -27,7 +27,7 @@ import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
-  private var dbHelper = FeedReaderDbHelper(this)
+  //private var dbHelper = FeedReaderDbHelper(this)
 
   private var fragmentManager = supportFragmentManager
   private var data = ArrayList<PokemonModel>()
@@ -225,15 +225,15 @@ class MainActivity : AppCompatActivity() {
 
 
 
-  //Non-functionality for saving to database
-  fun addSelectedImageToDb(imageSearchResults: PokemonModel){
+  //Not finished implemented. Related to db. Commented out for compiling of app
+  /*fun addSelectedImageToDb(imageSearchResults: PokemonModel){
     val os = ByteArrayOutputStream()
     getBitmap(applicationContext, null, imageSearchResults.imageLink, ::UriToBitmap).compress(Bitmap.CompressFormat.PNG, 100, os)
 
     dbHelper.writableDatabase.insert("pokemon", null, ContentValues().apply {
       put("image", os.toByteArray())
     })
-  }
+  }*/
 
   //Non-functionality for saving to database
   fun submit(view: View) {
