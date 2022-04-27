@@ -1,12 +1,11 @@
 package com.example.pokemonapplication
 
 import android.content.ContentValues
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
@@ -17,18 +16,19 @@ import com.example.pokemonapplication.Globals.TAG
 import com.example.pokemonapplication.adapters.PokemonAdapter
 import com.example.pokemonapplication.models.PokemonModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_search.*
-import kotlinx.android.synthetic.main.fragment_upload.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.ByteArrayOutputStream
 import java.io.File
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
+  private var dbHelper = FeedReaderDbHelper(this)
+
   //Sandras kode
   //private var imageInfo = ArrayList<ImageInfo>()
-  lateinit var pokemonAdapter : PokemonAdapter
+  lateinit var pokemonAdapter: PokemonAdapter
   private var pokemonModel = ArrayList<PokemonModel>()
   private var fragmentManager = supportFragmentManager
   private var data = ArrayList<PokemonModel>()
@@ -44,12 +44,14 @@ class MainActivity : AppCompatActivity() {
     val fragmentUpload = FragmentUpload()
     val fragmentSearch = FragmentSearch(data)
 
+    //Mitch
 //    //Used to set initial fragment to our container
 //    supportFragmentManager.beginTransaction().apply{
 //    replace(R.id.MainFragment, fragmentUpload)
 //    commit()
 //  }
 
+    //Mitch
     //Possibility to click on buttons and change fragment to corresponding fragment
     btnUpload.setOnClickListener {
       supportFragmentManager.beginTransaction().apply {
@@ -57,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         addToBackStack(null)
         commit()
       }
-    }
+    }  //Mitch
     btnSearch.setOnClickListener {
       supportFragmentManager.beginTransaction().apply {
         replace(R.id.MainFragment, fragmentSearch)
@@ -71,8 +73,8 @@ class MainActivity : AppCompatActivity() {
       //val json = JSONArray(results)
 
       for (index in 0 until data.size) {
-        val thumbnail = (data.get(index) as JSONObject).getString("thumbnail_link")
-        val imageLink = (data.get(index) as JSONObject).getString("image_link")
+        val thumbnail = (results.get(index) as JSONObject).getString("thumbnail_link")
+        val imageLink = (results.get(index) as JSONObject).getString("image_link")
 
         pokemonModel.add(
           PokemonModel(
@@ -83,7 +85,6 @@ class MainActivity : AppCompatActivity() {
       }
     }
   }
-
 
 
   /*
@@ -293,6 +294,37 @@ class MainActivity : AppCompatActivity() {
         }
       })
   }
+
+/*
+  fun submit(view: View) {
+    val thumbnail =
+      (fragmentManager.findFragmentByTag("FragmentSearch") as FragmentSearch).data.toString()
+    val imageLink =
+      (fragmentManager.findFragmentByTag("FragmentUpload") as FragmentUpload).imageUri.toString()
+//    var submitButton =
+//      (fragmentManager.findFragmentByTag("FragmentUpload") as FragmentUpload).btnSubmit.toString()
+    val imageSearchResults: PokemonModel = PokemonModel(
+      thumbnail,
+      imageLink,
+    )
+
+    pokemonModel.add(imageSearchResults)
+  }*/
+
+
+
+
+
+  fun addSelectedImageToDb(imageSearchResults: PokemonModel){
+    Log.i(TAG, "Clicked on an image")
+    val os = ByteArrayOutputStream()
+    getBitmap(applicationContext, null, imageSearchResults.imageLink, ::UriToBitmap).compress(Bitmap.CompressFormat.PNG, 100, os)
+
+    dbHelper.writableDatabase.insert("pokemon", null, ContentValues().apply {
+      put("image", os.toByteArray())
+    })
+  }
+
 
   fun submit(view: View) {
     val thumbnail =

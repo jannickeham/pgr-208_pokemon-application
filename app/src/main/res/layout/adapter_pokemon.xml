@@ -10,6 +10,7 @@
   app:cardCornerRadius="2dp"
   android:id="@+id/cardView"
   app:cardPreventCornerOverlap="false">
+  <!--Pokemonfilm-->
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -34,33 +35,10 @@
 
       <Button
         android:id="@+id/addImageToDB"
-        android:onClick="Save"
         android:text="Save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-<!--
-      <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkbox"
-        android:visibility="visible"
-        android:checked="false"
-        android:layout_alignBottom="@+id/image"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />-->
-
-
-      <!--  <TextView-->
-      <!--    android:layout_marginTop="5dp"-->
-      <!--    android:textColor="@color/black"-->
-      <!--    android:textSize="15sp"-->
-      <!--    android:layout_centerHorizontal="true"-->
-      <!--    android:id="@+id/name"-->
-      <!--    android:text="Pokemon Name"-->
-      <!--    android:layout_below="@+id/image"-->
-      <!--    android:layout_width="wrap_content"-->
-      <!--    android:layout_height="wrap_content"/>-->
 
     </LinearLayout>
 

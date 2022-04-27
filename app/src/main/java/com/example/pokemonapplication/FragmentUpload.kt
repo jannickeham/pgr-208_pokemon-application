@@ -116,6 +116,7 @@ class FragmentUpload : Fragment() {
   }
 
 
+  //- Mitch
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -147,6 +148,7 @@ class FragmentUpload : Fragment() {
         }
     }
 
+  //- Mitch
     private fun setImage(uri: Uri?) {
         Glide.with(this)
             .load(uri)
@@ -154,7 +156,7 @@ class FragmentUpload : Fragment() {
     }
 
 
-    //Launching cropper
+    //Launching cropper - Mitch
     private fun launchImageCrop(uri: Uri) {
         CropImage.activity(uri)
             .setGuidelines(CropImageView.Guidelines.ON)
@@ -162,7 +164,7 @@ class FragmentUpload : Fragment() {
             .start(requireContext(),this)
     }
 
-    //Gets image from gallery
+    //Gets image from gallery - Mitch
     private fun getImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
@@ -172,12 +174,13 @@ class FragmentUpload : Fragment() {
         startActivityForResult(intent, GALLERY_REQUEST_CODE)
 
     }
-
+    // - Mitch
     private fun addDataset(){
     val data = PokemonAdapter.createDataSet()
     pokemonAdapter.submitList(data)
   }
 
+  //- Mitch
   private fun initRecyclerView(){
     recycler_view.apply{
 
