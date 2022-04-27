@@ -21,11 +21,11 @@ import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
 import com.bumptech.glide.request.RequestOptions
 import com.example.pokemonapplication.R
 import com.example.pokemonapplication.models.PokemonModel
-import com.squareup.picasso.Picasso
+//import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.adapter_pokemon.view.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
 import kotlinx.android.synthetic.main.fragment_upload.*
-import kotlinx.android.synthetic.main.image_layout_fragment.view.*
+//import kotlinx.android.synthetic.main.image_layout_fragment.view.*
 import org.json.JSONArray
 
 class PokemonAdapter(
@@ -82,31 +82,31 @@ class PokemonAdapter(
     }
   }
 
-    class ViewHolder
-    constructor(
-      itemView: View
-    ): RecyclerView.ViewHolder(itemView){
+  class ViewHolder
+  constructor(
+    itemView: View
+  ): RecyclerView.ViewHolder(itemView){
 
-      val image = itemView.image
-      val imageResult = itemView.image_result
+    val image = itemView.image
+    //val imageResult = itemView.image_result
 
-      fun bind(pokemonModel: PokemonModel){
+    fun bind(pokemonModel: PokemonModel){
 
-        val requestOptions = RequestOptions()
-          .placeholder(R.drawable.ic_launcher_background)
-          .error(R.drawable.ic_launcher_background)
+      val requestOptions = RequestOptions()
+        .placeholder(R.drawable.ic_launcher_background)
+        .error(R.drawable.ic_launcher_background)
 
-        Glide.with(itemView.context)
-          .applyDefaultRequestOptions(requestOptions)
-          .load(pokemonModel.thumbnail)
-          .into(image)
+      Glide.with(itemView.context)
+        .applyDefaultRequestOptions(requestOptions)
+        .load(pokemonModel.thumbnail)
+        .into(image)
 
-       // blog_title.setText(blogPost.title)
-        //blog_author.setText(blogPost.username)
-
-      }
+      // blog_title.setText(blogPost.title)
+      //blog_author.setText(blogPost.username)
 
     }
+
+  }
 
 
 
