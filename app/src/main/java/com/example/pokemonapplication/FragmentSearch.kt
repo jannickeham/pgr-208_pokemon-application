@@ -25,7 +25,7 @@ class FragmentSearch(var data: ArrayList<PokemonModel>) : Fragment() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    Toast.makeText(activity, "FragmentSearch onCreate", Toast.LENGTH_SHORT).show()
+
   }
 
   override fun onCreateView(
@@ -38,13 +38,14 @@ class FragmentSearch(var data: ArrayList<PokemonModel>) : Fragment() {
 
       var onSaveImageListener = (object : View.OnClickListener {
         override fun onClick(view: View?) {
-          Toast.makeText(activity, "Clicked on an image", Toast.LENGTH_SHORT).show()
+
 
           val position: Int = view?.tag.toString().toInt()
           val imageSearchResults: PokemonModel = data.get(position)
           val selectedImage = imageSearchResults.imageLink
 
           saveButton.setOnClickListener{
+            Toast.makeText(activity, "New Pokemon to party", Toast.LENGTH_SHORT).show()
             (activity as MainActivity).addSelectedImageToDb(imageSearchResults)
 
             dbHelper.writableDatabase.insert("pokemon", null, ContentValues().apply {

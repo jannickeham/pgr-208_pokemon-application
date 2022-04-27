@@ -33,10 +33,10 @@
       </ImageView>
 
       <Button
-        android:id="@+id/addImageToDB"
-        android:text="Catch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+          android:id="@+id/addImageToDB"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Catch" />
 
     </LinearLayout>
 

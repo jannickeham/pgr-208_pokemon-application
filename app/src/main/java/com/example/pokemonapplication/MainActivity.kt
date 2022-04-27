@@ -17,6 +17,8 @@ import com.example.pokemonapplication.Globals.TAG
 import com.example.pokemonapplication.adapters.PokemonAdapter
 import com.example.pokemonapplication.models.PokemonModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.fragment_upload.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
@@ -56,6 +58,12 @@ class MainActivity : AppCompatActivity() {
         addToBackStack(null)
         commit()
       }
+      if(data.isEmpty()){
+        Toast.makeText(this@MainActivity, "It's dangerouse to enter the grass alone!! Please upload an image.", Toast.LENGTH_SHORT).show()
+      } else{
+        background_image.visibility = View.GONE
+      }
+
     }
     btnSaved.setOnClickListener {
       supportFragmentManager.beginTransaction().apply {
@@ -63,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         addToBackStack(null)
         commit()
       }
+      background_image.visibility = View.GONE
     }
 
     thread {
@@ -84,6 +93,7 @@ class MainActivity : AppCompatActivity() {
 
   //POST request to server
   fun postImageToServer(file: File) {
+    progressBar2.visibility = View.VISIBLE
     AndroidNetworking.upload("http://api-edu.gtl.ai/api/v1/imagesearch/upload")
       .addMultipartFile("image", file)
       .setTag("uploadTest")
@@ -193,6 +203,7 @@ class MainActivity : AppCompatActivity() {
       .build()
       .getAsJSONArray(object : JSONArrayRequestListener {
         override fun onResponse(response: JSONArray) {
+          progressBar2.visibility = View.GONE
           if (response.length() > 0) {
             for (index in 0 until response.length()) {
 
@@ -212,9 +223,10 @@ class MainActivity : AppCompatActivity() {
       })
   }
 
+
+
   //Non-functionality for saving to database
   fun addSelectedImageToDb(imageSearchResults: PokemonModel){
-    Toast.makeText(this@MainActivity, "New Pokemon to party", Toast.LENGTH_SHORT).show()
     val os = ByteArrayOutputStream()
     getBitmap(applicationContext, null, imageSearchResults.imageLink, ::UriToBitmap).compress(Bitmap.CompressFormat.PNG, 100, os)
 

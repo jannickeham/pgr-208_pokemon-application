@@ -33,7 +33,6 @@ class FragmentUpload : Fragment() {
     private val GALLERY_REQUEST_CODE = 1234
 
     var imageUri: String? = null
-    //var actualCropRect: Rect? = null
     var data: ArrayList<PokemonModel> = ArrayList()
 
     lateinit var pokemonAdapter : PokemonAdapter

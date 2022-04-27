@@ -35,11 +35,19 @@
 
   <Button
       android:id="@+id/btnSubmit"
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:onClick="submit"
       android:text="Get Encounters"
       app:layout_constraintTop_toBottomOf="@+id/update_textview"
       tools:layout_editor_absoluteX="220dp" />
+
+  <ProgressBar
+      android:id="@+id/progressBar2"
+      style="?android:attr/progressBarStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone"/>
+
 
 </LinearLayout>
