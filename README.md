@@ -1,5 +1,7 @@
 # Exam PGR-208 Android Development
 
+##Grade: B
+
 
 ## Screen 1
 - [x] Add Select Image button
